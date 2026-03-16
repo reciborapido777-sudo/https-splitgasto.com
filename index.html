@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="es" style="background-color: #000 !important; overflow-x: hidden;">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>SplitGasto 2026 | Justicia Financiera de Élite</title>
+    
+    <link rel="stylesheet" href="engine/global.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;700;800&family=Space_Grotesk:wght@500;700;900&display=swap');
+        
+        html, body { 
+            background: #000; color: #fff; 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            overflow-x: hidden !important; width: 100% !important; margin: 0; padding: 0;
+            box-sizing: border-box;
+            overscroll-behavior: none; /* Blindaje contra rebote de navegador */
+        }
+
+        /* Arquitectura de Cristalería Alpha */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            transform: translateZ(0); /* Aceleración GPU Alpha */
+        }
+
+        .floating-box {
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(30px);
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            z-index: 10;
+        }
+        
+        .floating-box:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255,255,255,0.12);
+            box-shadow: 0 40px 80px -20px rgba(0,0,0,0.8);
+        }
+
+        /* Gradientes de Autoridad: Blindaje Alpha Sincronizado */
+        .text-gradient-cyan { 
+            background: linear-gradient(135deg, #13ecd6 0%, #10b981 100%); 
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; 
+            padding-right: 0.55em !important; /* Estándar v1.62 */
+        }
+        
+        .btn-store {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .btn-store:hover {
+            background: #fff;
+            color: #000 !important;
+            transform: scale(1.05);
+        }
+
+        .reveal-node { animation: revealUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards; opacity: 0; }
+        @keyframes revealUp { from { transform: translateY(40px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+    </style>
+</head>
+<body class="min-h-screen">
+
+    <div class="max-w-7xl mx-auto px-6 py-20 space-y-32">
+        
+        <header class="flex flex-col items-center text-center space-y-12 relative z-20 pt-10 reveal-node">
+            <div class="glass-panel px-8 py-3 rounded-full border border-white/10 bg-white/5 inline-block">
+                <p class="text-[10px] font-black uppercase tracking-[0.6em] text-[#13ecd6] ml-1">Protocolo de Transparencia Activo</p>
+            </div>
+            
+            <h1 class="text-6xl sm:text-8xl md:text-[11rem] font-black font-['Space_Grotesk'] tracking-tighter uppercase italic leading-[0.85] pr-2">
+                SplitGasto <br> <span class="text-gradient-cyan">2026</span>
+            </h1>
+
+            <div class="space-y-8 max-w-4xl">
+                <p class="text-white text-3xl md:text-5xl font-black font-['Space_Grotesk'] italic uppercase tracking-tighter leading-none">
+                    La forma más <span class="text-[#13ecd6]">justa</span> <br class="sm:hidden"> de gestionar activos.
+                </p>
+                <p class="text-zinc-500 text-sm md:text-xl leading-relaxed max-w-2xl mx-auto font-bold uppercase tracking-tight opacity-80">
+                    Justicia matemática impulsada por IA. Un ecosistema invisible diseñado para que el Socio Fundador solo tenga que disfrutar del momento.
+                </p>
+            </div>
+
+            <div class="flex flex-col sm:flex-row gap-6 w-full max-w-lg mx-auto px-4">
+                <button onclick="SGRouter.navigate('auth', 'landing')" class="flex-1 py-7 bg-white text-black rounded-[2.5rem] font-black text-xs uppercase tracking-[0.4em] hover:bg-[#13ecd6] transition-all active:scale-95 shadow-2xl">Entrar</button>
+                <button onclick="SGRouter.navigate('register', 'landing')" class="flex-1 py-7 floating-box rounded-[2.5rem] font-black text-xs uppercase tracking-[0.4em] hover:bg-white/5 transition-all">Registrarse</button>
+            </div>
+        </header>
+
+        <section class="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12 reveal-node" style="animation-delay: 0.2s">
+            <div class="floating-box p-12 rounded-[4rem] border-[#a855f7]/20 flex flex-col items-start gap-6">
+                <span class="material-icons-round text-[#a855f7] text-5xl">balance</span>
+                <h3 class="text-xl font-black font-['Space_Grotesk'] uppercase italic text-white tracking-tighter">Justicia Real</h3>
+                <p class="text-zinc-600 text-sm leading-relaxed font-bold uppercase tracking-tight">Algoritmos que entienden la equidad. Repartos precisos basados en consumo real, eliminando el error humano.</p>
+            </div>
+
+            <div class="floating-box p-12 rounded-[4rem] border-[#13ecd6]/20 flex flex-col items-start gap-6">
+                <span class="material-icons-round text-[#13ecd6] text-5xl">touch_app</span>
+                <h3 class="text-xl font-black font-['Space_Grotesk'] uppercase italic text-white tracking-tighter">Simplicidad Total</h3>
+                <p class="text-zinc-600 text-sm leading-relaxed font-bold uppercase tracking-tight">Un solo toque para liquidar. Una interfaz invisible que trabaja para usted, no usted para ella.</p>
+            </div>
+
+            <div class="floating-box p-12 rounded-[4rem] border-[#FF9D42]/20 flex flex-col items-start gap-6">
+                <span class="material-icons-round text-[#FF9D42] text-5xl">stars</span>
+                <h3 class="text-xl font-black font-['Space_Grotesk'] uppercase italic text-white tracking-tighter">Estatus Élite</h3>
+                <p class="text-zinc-600 text-sm leading-relaxed font-bold uppercase tracking-tight">Privilegios de Socio Fundador en un ecosistema que valora su tiempo por encima de todo.</p>
+            </div>
+        </section>
+
+        <section class="floating-box p-12 md:p-24 rounded-[4rem] md:rounded-[6rem] text-center space-y-16 bg-gradient-to-b from-white/[0.02] to-transparent border-white/5 reveal-node" style="animation-delay: 0.4s">
+            <div class="space-y-4">
+                <p class="text-[10px] font-black text-zinc-600 uppercase tracking-[0.6em]">Movilidad Alpha</p>
+                <h2 class="text-4xl md:text-6xl font-black font-['Space_Grotesk'] tracking-tighter uppercase italic text-white leading-none">Control en su <span class="text-[#13ecd6]">bolsillo</span></h2>
+            </div>
+            
+            <div class="flex flex-col sm:flex-row justify-center items-center gap-6 w-full max-w-xl mx-auto">
+                <a href="#" class="btn-store w-full sm:w-auto flex items-center justify-center gap-6 px-10 py-6 rounded-[2.5rem] text-left group">
+                    <span class="material-icons-round text-4xl text-white group-hover:text-black transition-colors">apple</span>
+                    <div>
+                        <p class="text-[9px] font-black uppercase tracking-widest text-zinc-500 group-hover:text-zinc-700 transition-colors">Descargar</p>
+                        <p class="text-xl font-black font-['Space_Grotesk'] leading-none text-white group-hover:text-black transition-colors">App Store</p>
+                    </div>
+                </a>
+                
+                <a href="#" class="btn-store w-full sm:w-auto flex items-center justify-center gap-6 px-10 py-6 rounded-[2.5rem] text-left group">
+                    <span class="material-icons-round text-4xl text-white group-hover:text-black transition-colors">play_arrow</span>
+                    <div>
+                        <p class="text-[9px] font-black uppercase tracking-widest text-zinc-500 group-hover:text-zinc-700 transition-colors">Disponible</p>
+                        <p class="text-xl font-black font-['Space_Grotesk'] leading-none text-white group-hover:text-black transition-colors">Google Play</p>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+        <footer class="pt-12 pb-24 flex flex-col md:flex-row justify-between items-center gap-10 border-t border-white/5 reveal-node" style="animation-delay: 0.6s">
+            <p class="text-[10px] font-black text-zinc-800 uppercase tracking-[0.6em] text-center md:text-left">SplitGasto 2026 Core System</p>
+            <nav class="flex gap-12">
+                <button onclick="SGRouter.navigate('legal', 'landing')" class="text-[10px] font-black uppercase tracking-widest text-zinc-600 hover:text-white transition-all active:scale-90">Legal</button>
+                <button onclick="SGRouter.navigate('investors', 'landing')" class="text-[10px] font-black uppercase tracking-widest text-zinc-600 hover:text-white transition-all active:scale-90">Inversores</button>
+            </nav>
+        </footer>
+    </div>
+
+    <script src="engine/router.js"></script>
+</body>
+</html>

@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="es" style="background-color: #000 !important; overflow-x: hidden;">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Motor de Reparto Elite | SplitGasto 2026</title>
+    
+    <link rel="stylesheet" href="engine/global.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@800&family=Space_Grotesk:wght@500;700;900&display=swap');
+        
+        html, body { 
+            background: #000; color: #fff; 
+            font-family: 'Inter', sans-serif; 
+            overflow-x: hidden; width: 100%; margin: 0; padding: 0; 
+            overscroll-behavior: none;
+        }
+
+        .glass-panel { 
+            background: rgba(255, 255, 255, 0.02); 
+            backdrop-filter: blur(30px); 
+            -webkit-backdrop-filter: blur(30px); 
+            border: 1px solid rgba(255, 255, 255, 0.05); 
+            transform: translateZ(0); 
+        }
+
+        .money-display { 
+            font-family: 'Space Grotesk', sans-serif; 
+            padding-right: 0.55em !important; 
+            white-space: nowrap; 
+        }
+        
+        .reveal { 
+            animation: revealUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards; 
+            opacity: 0; 
+        }
+
+        @keyframes revealUp { 
+            from { transform: translateY(20px); opacity: 0; } 
+            to { transform: translateY(0); opacity: 1; } 
+        }
+
+        .control-display {
+            background: linear-gradient(135deg, rgba(168, 85, 247, 0.1) 0%, rgba(19, 236, 214, 0.05) 100%);
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .game-btn { transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+        .game-btn:active { transform: scale(0.95); }
+        
+        .active-glow {
+            border-color: #a855f7 !important;
+            box-shadow: 0 0 30px rgba(168, 85, 247, 0.2);
+            background: rgba(168, 85, 247, 0.08) !important;
+        }
+
+        /* Participantes Flotantes y Dinámicos */
+        .participant-row {
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            cursor: pointer;
+            position: relative;
+            z-index: 1;
+        }
+        .participant-row:hover {
+            background: rgba(255, 255, 255, 0.05);
+            transform: translateY(-5px) scale(1.02);
+            border-color: rgba(255, 255, 255, 0.1);
+            z-index: 10;
+        }
+        .participant-row:hover .avatar-img {
+            filter: grayscale(0) !important;
+            border-color: #13ecd6 !important;
+            box-shadow: 0 0 20px rgba(19, 236, 214, 0.2);
+        }
+    </style>
+</head>
+<body class="min-h-screen pb-32">
+    <div class="max-w-7xl mx-auto px-6 py-8 space-y-10">
+        
+        <header class="flex justify-between items-center py-4 reveal">
+            <div class="flex items-center gap-6">
+                <button onclick="SGRouter.back()" class="size-14 rounded-2xl glass-panel flex items-center justify-center hover:bg-white/5 active:scale-90 transition-all shadow-xl">
+                    <span class="material-icons-round text-zinc-500 text-3xl">arrow_back</span>
+                </button>
+                
+                <div class="flex items-center gap-4 cursor-pointer group" onclick="SGRouter.navigate('profile', 'split')">
+                    <div class="relative">
+                        <div class="absolute -inset-1 bg-[#FF9D42] rounded-xl blur opacity-20 group-hover:opacity-40 transition-all"></div>
+                        <img src="https://api.dicebear.com/9.x/initials/svg?seed=SG&backgroundColor=1a2a1a&fontFamily=Arial&fontSize=40" class="relative size-12 rounded-xl border border-[#FF9D42]/30 group-hover:border-[#FF9D42] transition-all" alt="Comandante">
+                    </div>
+                    <div>
+                        <p class="text-[9px] font-black text-zinc-600 uppercase tracking-[0.4em] mb-0.5">Socio Fundador</p>
+                        <h1 class="text-base font-black font-['Space_Grotesk'] tracking-tighter uppercase italic leading-none">Perfil Alpha</h1>
+                    </div>
+                </div>
+            </div>
+
+            <button onclick="SGRouter.navigate('dashboard', 'split')" class="px-5 py-3 rounded-2xl glass-panel flex items-center gap-3 border-white/5 hover:bg-white/10 transition-all">
+                <span class="material-icons-round text-[#13ecd6] text-sm">dashboard</span>
+                <span class="text-[9px] font-black uppercase tracking-widest text-zinc-400">Mando</span>
+            </button>
+        </header>
+
+        <section class="space-y-6 reveal" style="animation-delay: 0.1s">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div onclick="updateControl(this, 'Ruleta')" class="game-btn glass-panel p-6 flex flex-col items-center gap-3 cursor-pointer group">
+                    <span class="material-icons-round text-[#a855f7] text-2xl group-hover:rotate-180 transition-transform duration-700">autorenew</span>
+                    <span class="text-[9px] font-black uppercase tracking-widest text-zinc-500 group-hover:text-white transition-colors">Ruleta Alpha</span>
+                </div>
+                <div onclick="updateControl(this, 'Carta Alta')" class="game-btn glass-panel p-6 flex flex-col items-center gap-3 cursor-pointer group">
+                    <span class="material-icons-round text-[#a855f7] text-2xl group-hover:-translate-y-1 transition-transform">style</span>
+                    <span class="text-[9px] font-black uppercase tracking-widest text-zinc-500 group-hover:text-white transition-colors">Carta Alta</span>
+                </div>
+                <div onclick="updateControl(this, 'Dardos')" class="game-btn glass-panel p-6 flex flex-col items-center gap-3 cursor-pointer group">
+                    <span class="material-icons-round text-[#a855f7] text-2xl group-hover:scale-125 transition-transform">ads_click</span>
+                    <span class="text-[9px] font-black uppercase tracking-widest text-zinc-500 group-hover:text-white transition-colors">Dardos</span>
+                </div>
+                <div onclick="updateControl(this, 'Moneda')" class="game-btn glass-panel p-6 flex flex-col items-center gap-3 cursor-pointer group">
+                    <span class="material-icons-round text-[#a855f7] text-2xl group-hover:animate-bounce">monetization_on</span>
+                    <span class="text-[9px] font-black uppercase tracking-widest text-zinc-500 group-hover:text-white transition-colors">Moneda</span>
+                </div>
+            </div>
+
+            <div id="game-control-panel" class="control-display p-8 rounded-[2.5rem] flex flex-col md:flex-row justify-between items-center gap-6 border-white/10 shadow-2xl">
+                <div class="flex items-center gap-5">
+                    <div class="size-12 rounded-full bg-[#a855f7]/20 flex items-center justify-center border border-[#a855f7]/30 shadow-[0_0_20px_rgba(168,85,247,0.2)]">
+                        <span id="game-icon" class="material-icons-round text-[#a855f7] animate-pulse">psychology</span>
+                    </div>
+                    <div>
+                        <p class="text-[9px] font-black text-zinc-500 uppercase tracking-widest">Estado de Ejecución</p>
+                        <h4 id="active-game-label" class="text-xl font-black font-['Space_Grotesk'] uppercase italic">Seleccione Juego</h4>
+                    </div>
+                </div>
+                <button onclick="executeSplit()" class="w-full md:w-auto px-10 py-5 bg-white text-black rounded-2xl font-black text-[10px] uppercase tracking-[0.4em] hover:bg-[#13ecd6] transition-all active:scale-95 shadow-xl">
+                    Ejecutar Reparto
+                </button>
+            </div>
+        </section>
+
+        <main class="glass-panel p-10 rounded-[3.5rem] border-[#13ecd6]/10 space-y-8 reveal" style="animation-delay: 0.2s">
+            <div class="flex justify-between items-center border-b border-white/5 pb-6">
+                <div class="flex items-center gap-4">
+                    <span class="size-3 bg-[#13ecd6] rounded-full animate-pulse"></span>
+                    <h2 class="text-3xl font-black font-['Space_Grotesk'] uppercase italic tracking-tighter leading-none">Sushi Kyoto Pro</h2>
+                </div>
+                <p class="text-4xl font-black font-['Space_Grotesk'] text-[#13ecd6] money-display leading-none">25,56€</p>
+            </div>
+            
+            <div class="grid grid-cols-1 gap-4">
+                <div class="participant-row flex items-center justify-between p-5 glass-panel rounded-2xl border-white/5">
+                    <div class="flex items-center gap-4">
+                        <img src="https://api.dicebear.com/9.x/initials/svg?seed=SG&backgroundColor=1a2a1a&fontFamily=Arial&fontSize=40" class="avatar-img size-10 rounded-xl border border-[#FF9D42]/30 transition-all duration-500">
+                        <div>
+                            <p class="text-[8px] font-black text-zinc-500 uppercase tracking-widest leading-none">Usted</p>
+                            <p class="text-xs font-black uppercase text-white">Comandante</p>
+                        </div>
+                    </div>
+                    <div class="text-right">
+                        <p class="font-black font-['Space_Grotesk'] money-display text-white leading-none">8,52€</p>
+                        <span class="text-[8px] font-black text-[#13ecd6] uppercase tracking-widest">Liquidado</span>
+                    </div>
+                </div>
+
+                <div class="participant-row flex items-center justify-between p-5 glass-panel rounded-2xl border-white/5 opacity-60">
+                    <div class="flex items-center gap-4">
+                        <img src="https://api.dicebear.com/9.x/initials/svg?seed=MR&backgroundColor=0a2a1a&fontFamily=Arial&fontSize=40" class="avatar-img size-10 rounded-xl grayscale transition-all duration-500">
+                        <div>
+                            <p class="text-[8px] font-black text-zinc-500 uppercase tracking-widest leading-none">Socio Alpha</p>
+                            <p class="text-xs font-black uppercase">Mario</p>
+                        </div>
+                    </div>
+                    <p class="font-black font-['Space_Grotesk'] money-display text-zinc-400 leading-none">8,52€</p>
+                </div>
+
+                <div class="participant-row flex items-center justify-between p-5 glass-panel rounded-2xl border-white/5 opacity-60">
+                    <div class="flex items-center gap-4">
+                        <img src="https://api.dicebear.com/9.x/initials/svg?seed=EL&backgroundColor=1a0a2a&fontFamily=Arial&fontSize=40" class="avatar-img size-10 rounded-xl grayscale transition-all duration-500" alt="Elena">
+                        <div>
+                            <p class="text-[8px] font-black text-zinc-500 uppercase tracking-widest leading-none">Socia Alpha</p>
+                            <p class="text-xs font-black uppercase">Elena</p>
+                        </div>
+                    </div>
+                    <p class="font-black font-['Space_Grotesk'] money-display text-zinc-400 leading-none">8,52€</p>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="engine/router.js"></script>
+    <script>
+        let selectedGame = null;
+
+        function updateControl(element, game) {
+            document.querySelectorAll('.game-btn').forEach(btn => btn.classList.remove('active-glow'));
+            selectedGame = game;
+            element.classList.add('active-glow');
+            
+            const label = document.getElementById('active-game-label');
+            const icon = document.getElementById('game-icon');
+            
+            label.innerText = game.toUpperCase() + ' ACTIVA';
+            label.style.color = '#a855f7';
+            
+            const icons = {
+                'Ruleta': 'autorenew', 'Carta Alta': 'style', 'Dardos': 'ads_click', 'Moneda': 'monetization_on'
+            };
+            icon.innerText = icons[game] || 'psychology';
+            
+            SGRouter.showToast(`${game} lista para ejecución`, 'info');
+        }
+
+        function executeSplit() {
+            if (!selectedGame) {
+                SGRouter.showToast('Seleccione un protocolo de azar', 'error');
+                return;
+            }
+            SGRouter.navigate('success', 'split');
+        }
+    </script>
+</body>
+</html>

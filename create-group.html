@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="es" style="background-color:#0a0a0a">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+<title>Crear Grupo | SplitGasto 2026</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
+<link rel="stylesheet" href="engine/global.css"/>
+<style>
+  :root { --cyan:#13ecd6; --purple:#a855f7; --orange:#FF9D42; }
+  * { font-family:'Manrope',sans-serif; box-sizing:border-box; }
+  body { background:#0a0a0a; min-height:100dvh; }
+
+  .glass { background:rgba(255,255,255,0.04); backdrop-filter:blur(20px); border:1px solid rgba(255,255,255,0.08); border-radius:24px; }
+
+  .sg-input {
+    background:rgba(255,255,255,0.05);
+    border:1px solid rgba(255,255,255,0.1);
+    border-radius:14px;
+    color:white;
+    padding:14px 16px;
+    width:100%;
+    font-size:0.9rem;
+    font-weight:600;
+    outline:none;
+    transition:border-color 0.2s;
+  }
+  .sg-input:focus { border-color:var(--cyan); }
+  .sg-input::placeholder { color:rgba(255,255,255,0.25); font-weight:400; }
+
+  /* Color picker */
+  .color-dot {
+    width:36px; height:36px; border-radius:50%;
+    cursor:pointer;
+    border:3px solid transparent;
+    transition:all 0.2s;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .color-dot.selected { border-color:white; transform:scale(1.15); }
+
+  /* Emoji picker */
+  .emoji-btn {
+    width:48px; height:48px;
+    border-radius:14px;
+    border:1px solid rgba(255,255,255,0.1);
+    background:rgba(255,255,255,0.05);
+    font-size:1.4rem;
+    cursor:pointer;
+    transition:all 0.2s;
+    display:flex; align-items:center; justify-content:center;
+  }
+  .emoji-btn.selected { border-color:var(--cyan); background:rgba(19,236,214,0.1); }
+
+  /* Member invite row */
+  .member-row {
+    display:flex; align-items:center; gap:12px;
+    padding:12px;
+    border-radius:14px;
+    background:rgba(255,255,255,0.04);
+    border:1px solid rgba(255,255,255,0.06);
+  }
+  .member-avatar { width:40px; height:40px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:0.85rem; }
+
+  #create-btn {
+    background:linear-gradient(135deg,var(--cyan),#0fbfaf);
+    color:#0a0a0a; border-radius:50px;
+    font-weight:800; font-size:1rem;
+    box-shadow:0 8px 32px rgba(19,236,214,0.35);
+    transition:all 0.2s;
+  }
+</style>
+</head>
+<body class="text-white pb-32">
+
+<header class="flex justify-between items-center px-5 py-4 sticky top-0 z-50" style="background:rgba(10,10,10,0.9);backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,0.05)">
+  <button onclick="SGRouter.back()" class="w-10 h-10 rounded-full flex items-center justify-center" style="background:rgba(255,255,255,0.07)">
+    <span class="material-icons-round text-white/60">close</span>
+  </button>
+  <h1 class="font-bold text-base">Nuevo Grupo</h1>
+  <button id="create-btn" class="px-5 py-2 text-sm" onclick="createGroup()">Crear</button>
+</header>
+
+<main class="max-w-md mx-auto px-4 pt-6 space-y-5">
+
+  <!-- Group preview card -->
+  <div class="glass p-6 flex items-center gap-5">
+    <div id="group-preview-icon" class="w-20 h-20 rounded-2xl flex items-center justify-center text-4xl flex-shrink-0" style="background:rgba(19,236,214,0.15)">
+      🍣
+    </div>
+    <div>
+      <p id="preview-name" class="text-xl font-black" style="color:var(--cyan)">Mi Nuevo Grupo</p>
+      <p class="text-xs opacity-40 mt-1" id="preview-members">1 miembro · Comienza hoy</p>
+    </div>
+  </div>
+
+  <!-- Name -->
+  <div class="space-y-2">
+    <label class="text-xs font-bold uppercase tracking-widest opacity-40">Nombre del Grupo</label>
+    <input type="text" id="group-name" class="sg-input" placeholder="Ej: Cena de Navidad 🎄" maxlength="40" oninput="updatePreview()"/>
+  </div>
+
+  <!-- Emoji -->
+  <div class="space-y-3">
+    <label class="text-xs font-bold uppercase tracking-widest opacity-40">Icono</label>
+    <div class="flex gap-2 flex-wrap">
+      <button class="emoji-btn selected" onclick="selectEmoji(this,'🍣')">🍣</button>
+      <button class="emoji-btn" onclick="selectEmoji(this,'🏠')">🏠</button>
+      <button class="emoji-btn" onclick="selectEmoji(this,'✈️')">✈️</button>
+      <button class="emoji-btn" onclick="selectEmoji(this,'🏔️')">🏔️</button>
+      <button class="emoji-btn" onclick="selectEmoji(this,'🎉')">🎉</button>
+      <button class="emoji-btn" onclick="selectEmoji(this,'💼')">💼</button>
+      <button class="emoji-btn" onclick="selectEmoji(this,'🏋️')">🏋️</button>
+      <button class="emoji-btn" onclick="selectEmoji(this,'🎮')">🎮</button>
+      <button class="emoji-btn" onclick="selectEmoji(this,'🎓')">🎓</button>
+      <button class="emoji-btn" onclick="selectEmoji(this,'🌊')">🌊</button>
+    </div>
+  </div>
+
+  <!-- Color accent -->
+  <div class="space-y-3">
+    <label class="text-xs font-bold uppercase tracking-widest opacity-40">Color del Grupo</label>
+    <div class="flex gap-3 flex-wrap">
+      <div class="color-dot selected" style="background:#13ecd6" onclick="selectColor(this,'#13ecd6')"></div>
+      <div class="color-dot" style="background:#a855f7" onclick="selectColor(this,'#a855f7')"></div>
+      <div class="color-dot" style="background:#FF9D42" onclick="selectColor(this,'#FF9D42')"></div>
+      <div class="color-dot" style="background:#ec4899" onclick="selectColor(this,'#ec4899')"></div>
+      <div class="color-dot" style="background:#3b82f6" onclick="selectColor(this,'#3b82f6')"></div>
+      <div class="color-dot" style="background:#22c55e" onclick="selectColor(this,'#22c55e')"></div>
+      <div class="color-dot" style="background:#f59e0b" onclick="selectColor(this,'#f59e0b')"></div>
+      <div class="color-dot" style="background:#ef4444" onclick="selectColor(this,'#ef4444')"></div>
+    </div>
+  </div>
+
+  <!-- Currency -->
+  <div class="space-y-2">
+    <label class="text-xs font-bold uppercase tracking-widest opacity-40">Moneda Base</label>
+    <select id="currency-sel" class="sg-input" style="appearance:none;cursor:pointer">
+      <option value="EUR">🇪🇺 Euro (€)</option>
+      <option value="USD">🇺🇸 Dólar ($)</option>
+      <option value="GBP">🇬🇧 Libra (£)</option>
+      <option value="JPY">🇯🇵 Yen (¥)</option>
+    </select>
+  </div>
+
+  <!-- Split default -->
+  <div class="space-y-2">
+    <label class="text-xs font-bold uppercase tracking-widest opacity-40">Reparto por defecto</label>
+    <select class="sg-input" style="appearance:none;cursor:pointer">
+      <option>División igual</option>
+      <option>Por porcentaje</option>
+      <option>Por partes</option>
+    </select>
+  </div>
+
+  <!-- Members -->
+  <div class="glass p-5 space-y-4">
+    <div class="flex justify-between items-center">
+      <h3 class="font-bold text-sm">Miembros</h3>
+      <button onclick="addMember()" class="text-xs font-bold flex items-center gap-1" style="color:var(--cyan)">
+        <span class="material-icons-round text-sm">person_add</span>
+        Invitar
+      </button>
+    </div>
+    <div id="members-list" class="space-y-2">
+      <!-- Commander (you) -->
+      <div class="member-row">
+        <div class="member-avatar" style="background:rgba(19,236,214,0.15);color:#13ecd6">C</div>
+        <div class="flex-1">
+          <p class="text-sm font-bold">Commander <span class="text-xs opacity-40">(tú)</span></p>
+          <p class="text-xs opacity-40">Socio Fundador</p>
+        </div>
+        <span class="text-xs px-2 py-1 rounded-full font-bold" style="background:rgba(19,236,214,0.1);color:var(--cyan)">Admin</span>
+      </div>
+    </div>
+
+    <!-- Invite input -->
+    <div class="flex gap-2">
+      <input type="text" id="invite-input" class="sg-input flex-1" placeholder="Nombre o email…"/>
+      <button onclick="addMember()" class="px-4 py-2 rounded-xl font-bold text-sm" style="background:rgba(19,236,214,0.15);color:var(--cyan);border:1px solid rgba(19,236,214,0.3)">
+        <span class="material-icons-round text-sm">add</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Create button -->
+  <button id="create-btn-main" class="w-full py-5 rounded-full font-black text-lg" style="background:linear-gradient(135deg,var(--cyan),#0fbfaf);color:#0a0a0a;box-shadow:0 8px 32px rgba(19,236,214,0.35)" onclick="createGroup()">
+    <span class="flex items-center justify-center gap-2">
+      <span class="material-icons-round">group_add</span>
+      CREAR GRUPO
+    </span>
+  </button>
+
+</main>
+
+<script src="engine/router.js"></script>
+<script>
+let selectedEmoji = '🍣';
+let selectedColor = '#13ecd6';
+let members = [{name:'Commander', color:'#13ecd6', initials:'C', role:'Admin'}];
+
+function updatePreview() {
+  const name = document.getElementById('group-name').value || 'Mi Nuevo Grupo';
+  document.getElementById('preview-name').textContent = name;
+  document.getElementById('preview-name').style.color = selectedColor;
+  document.getElementById('group-preview-icon').textContent = selectedEmoji;
+  document.getElementById('group-preview-icon').style.background = selectedColor + '22';
+  document.getElementById('preview-members').textContent = `${members.length} miembro${members.length!==1?'s':''} · Comienza hoy`;
+}
+
+function selectEmoji(btn, emoji) {
+  document.querySelectorAll('.emoji-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  selectedEmoji = emoji;
+  updatePreview();
+}
+
+function selectColor(el, color) {
+  document.querySelectorAll('.color-dot').forEach(d => d.classList.remove('selected'));
+  el.classList.add('selected');
+  selectedColor = color;
+  updatePreview();
+}
+
+function renderMembers() {
+  const list = document.getElementById('members-list');
+  list.innerHTML = members.map(m => `
+    <div class="member-row">
+      <div class="member-avatar" style="background:${m.color}22;color:${m.color}">${m.initials}</div>
+      <div class="flex-1">
+        <p class="text-sm font-bold">${m.name}${m.name==='Commander'?' <span class="text-xs opacity-40">(tú)</span>':''}</p>
+        <p class="text-xs opacity-40">${m.role==='Admin'?'Administrador':'Miembro'}</p>
+      </div>
+      ${m.name!=='Commander'?`<button onclick="removeMember('${m.name}')" class="opacity-30 hover:opacity-70 transition-opacity"><span class="material-icons-round text-sm">remove_circle</span></button>`:'<span class="text-xs px-2 py-1 rounded-full font-bold" style="background:rgba(19,236,214,0.1);color:var(--cyan)">Admin</span>'}
+    </div>`).join('');
+  document.getElementById('invite-input').value = '';
+}
+
+function addMember() {
+  const input = document.getElementById('invite-input');
+  const name = input.value.trim();
+  if (!name) { input.focus(); return; }
+  const colors = ['#a855f7','#FF9D42','#ec4899','#3b82f6','#22c55e'];
+  members.push({name, initials:name[0].toUpperCase(), color:colors[(members.length-1)%colors.length], role:'Member'});
+  renderMembers();
+  updatePreview();
+  SGRouter.showToast(`${name} añadido`, 'success');
+}
+
+function removeMember(name) {
+  members = members.filter(m => m.name !== name);
+  renderMembers();
+  updatePreview();
+}
+
+function createGroup() {
+  const name = document.getElementById('group-name').value.trim();
+  if (!name) { SGRouter.showToast('Ponle un nombre al grupo', 'warning'); return; }
+  SGRouter.showToast(`Grupo "${name}" creado ✓`, 'success');
+  setTimeout(() => SGRouter.navigate('groups', 'create-group'), 1000);
+}
+
+// Init
+document.getElementById('group-name').addEventListener('input', updatePreview);
+updatePreview();
+</script>
+</body>
+</html>

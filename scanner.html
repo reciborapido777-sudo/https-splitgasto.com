@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="es" style="background-color: #000 !important; overflow-x: hidden;">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Scanner Alpha 2026 | Perímetro Limpio</title>
+    
+    <link rel="stylesheet" href="engine/global.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Plus+Jakarta+Sans:wght@800&family=Space_Grotesk:wght@500;700;900&display=swap');
+        
+        body, html { 
+            background: #000; color: #fff; 
+            font-family: 'Inter', sans-serif; 
+            height: 100vh; overflow: hidden !important; margin: 0; padding: 0; 
+            display: flex; flex-direction: column; 
+        }
+
+        .glass-panel { 
+            background: rgba(255, 255, 255, 0.02); 
+            backdrop-filter: blur(40px); 
+            -webkit-backdrop-filter: blur(40px); 
+            border: 1px solid rgba(255, 255, 255, 0.05); 
+        }
+
+        .ui-layer { 
+            position: relative; z-index: 50; 
+            background: rgba(0,0,0,0.7); 
+            backdrop-filter: blur(25px); 
+        }
+
+        .viewfinder-master { 
+            flex: 1; position: relative; 
+            background: #020202; overflow: hidden; 
+            margin: 0 20px; border-radius: 3.5rem; 
+            border: 1px solid rgba(255,255,255,0.05); 
+            box-shadow: inset 0 0 100px rgba(0,0,0,0.9); 
+            transform: translateZ(0);
+        }
+
+        .frame-guides { position: absolute; inset: 80px 40px; pointer-events: none; }
+        
+        .corner { 
+            position: absolute; width: 45px; height: 45px; 
+            border: 4px solid #13ecd6; 
+            filter: drop-shadow(0 0 10px rgba(19,236,214,0.4)); 
+            transform: translateZ(0);
+        }
+
+        .tl { top: -2px; left: -2px; border-right: 0; border-bottom: 0; border-radius: 1.8rem 0 0 0; }
+        .tr { top: -2px; right: -2px; border-left: 0; border-bottom: 0; border-radius: 0 1.8rem 0 0; }
+        .bl { bottom: -2px; left: -2px; border-right: 0; border-top: 0; border-radius: 0 0 0 1.8rem; }
+        .br { bottom: -2px; right: -2px; border-left: 0; border-top: 0; border-radius: 0 0 1.8rem 0; }
+
+        .scan-pulse { 
+            position: absolute; width: 100%; height: 2px; 
+            background: linear-gradient(to right, transparent, #13ecd6, transparent); 
+            box-shadow: 0 0 30px #13ecd6; 
+            animation: moveScan 3.5s infinite cubic-bezier(0.4, 0, 0.2, 1); 
+            transform: translateZ(0);
+        }
+
+        @keyframes moveScan { 0% { top: 10%; opacity: 0; } 50% { opacity: 1; } 100% { top: 90%; opacity: 0; } }
+
+        .shutter-alpha { 
+            background: #FF9D42; 
+            box-shadow: 0 0 50px rgba(255, 157, 66, 0.3); 
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); 
+        }
+
+        .shutter-alpha:active { transform: scale(0.9) rotate(2deg); filter: brightness(1.2); }
+        .reveal-node { animation: revealUp 1s cubic-bezier(0.16, 1, 0.3, 1) forwards; opacity: 0; }
+        @keyframes revealUp { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+    </style>
+</head>
+<body class="min-h-screen">
+
+    <header class="ui-layer p-8 flex justify-between items-center">
+        <button onclick="SGRouter.back()" class="size-14 glass-panel rounded-2xl flex items-center justify-center hover:bg-white/5 active:scale-90 transition-all shadow-xl">
+            <span class="material-icons-round text-white text-3xl">close</span>
+        </button>
+        <div class="flex flex-col items-end">
+            <p class="text-[10px] font-black text-[#13ecd6] uppercase tracking-[0.5em] mb-1 leading-none">AI Vision Alpha</p>
+            <div class="flex items-center gap-2 px-3 py-1 bg-[#a855f7]/10 rounded-full border border-[#a855f7]/20">
+                <span class="material-icons-round text-[#a855f7] text-[10px]">verified_user</span>
+                <p class="text-[8px] font-black text-zinc-500 uppercase tracking-widest leading-none">Cifrado AES-256</p>
+            </div>
+        </div>
+    </header>
+
+    <main class="viewfinder-master reveal-node">
+        <div class="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1556742044-3c52d6e88c62?q=80&w=2000')] bg-cover bg-center opacity-30 scale-105"></div>
+        
+        <div class="frame-guides">
+            <div class="corner tl"></div><div class="corner tr"></div>
+            <div class="corner bl"></div><div class="corner br"></div>
+            <div class="scan-pulse"></div>
+            
+            <div class="absolute bottom-10 w-full text-center space-y-2">
+                <p class="text-[10px] font-black text-white uppercase tracking-[0.6em]">Alineación Requerida</p>
+                <p class="text-[8px] font-bold text-zinc-500 uppercase tracking-[0.3em]">Encuadre el ticket para auditoría</p>
+            </div>
+        </div>
+    </main>
+
+    <footer class="ui-layer p-10 flex flex-col items-center gap-10 reveal-node" style="animation-delay: 0.2s">
+        <div class="flex justify-between items-center w-full max-w-sm px-4">
+            <button class="flex flex-col items-center gap-3 opacity-30 hover:opacity-100 transition-all active:scale-90">
+                <span class="material-icons-round text-3xl text-white">flash_on</span>
+                <span class="text-[9px] font-black uppercase tracking-widest text-zinc-600">Flash</span>
+            </button>
+            
+            <button onclick="SGRouter.navigate('receipt', 'scanner')" class="size-24 shutter-alpha rounded-full flex items-center justify-center border-8 border-black/30 group">
+                <div class="size-20 rounded-full border-2 border-white/20 flex items-center justify-center">
+                    <span class="material-icons-round text-black text-4xl">qr_code_scanner</span>
+                </div>
+            </button>
+            
+            <button class="flex flex-col items-center gap-3 opacity-30 hover:opacity-100 transition-all active:scale-90">
+                <span class="material-icons-round text-3xl text-white">photo_library</span>
+                <span class="text-[9px] font-black uppercase tracking-widest text-zinc-600">Galería</span>
+            </button>
+        </div>
+        <p class="text-[10px] font-black text-zinc-700 uppercase tracking-[0.5em]">Digitalización de <span class="text-[#13ecd6]">Grado Militar</span></p>
+    </footer>
+
+    <script src="engine/router.js"></script>
+</body>
+</html>

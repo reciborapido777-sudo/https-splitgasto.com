@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es" style="background-color: #000 !important; overflow-x: hidden;">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Login Alpha | SplitGasto 2026</title>
+    
+    <link rel="stylesheet" href="engine/global.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Space_Grotesk:wght@500;700;900&display=swap');
+        
+        html, body { 
+            background: #000; color: #fff; 
+            font-family: 'Inter', sans-serif; 
+            height: 100vh; overflow: hidden !important;
+            overscroll-behavior: none;
+        }
+
+        .auth-input { 
+            background: rgba(255, 255, 255, 0.02); 
+            border: 1px solid rgba(255, 255, 255, 0.05); 
+            border-radius: 1.5rem; 
+            padding: 1.25rem 1.5rem; 
+            width: 100%; 
+            color: white; 
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1); 
+            transform: translateZ(0);
+        }
+
+        .auth-input:focus { 
+            border-color: #a855f7; 
+            outline: none; 
+            background: rgba(168, 85, 247, 0.03);
+            box-shadow: 0 0 40px rgba(168, 85, 247, 0.1); 
+        }
+
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transform: translateZ(0);
+        }
+
+        .reveal-node { animation: revealUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; opacity: 0; }
+        @keyframes revealUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center">
+
+    <div class="w-full max-w-md mx-auto px-8 py-10 space-y-12">
+        
+        <header class="text-center space-y-6 reveal-node">
+            <div class="flex justify-start">
+                <button onclick="SGRouter.back()" class="size-12 rounded-2xl glass-panel flex items-center justify-center hover:bg-white/5 active:scale-90 transition-all shadow-lg">
+                    <span class="material-icons-round text-zinc-500">arrow_back</span>
+                </button>
+            </div>
+            
+            <div class="size-20 mx-auto rounded-3xl glass-panel flex items-center justify-center border-[#a855f7]/30 relative shadow-[0_0_30px_rgba(168,85,247,0.1)]">
+                <span class="material-icons-round text-[#a855f7] text-4xl">fingerprint</span>
+            </div>
+            
+            <div class="space-y-1">
+                <p class="text-[9px] font-black text-zinc-600 uppercase tracking-[0.5em]">Identity Protocol</p>
+                <h1 class="text-3xl font-black font-['Space_Grotesk'] tracking-tighter uppercase italic leading-none">Acceso Socio</h1>
+            </div>
+        </header>
+
+        <main class="space-y-8 reveal-node" style="animation-delay: 0.1s">
+            <div class="space-y-5">
+                <div class="space-y-2">
+                    <p class="ml-4 text-[8px] font-black text-zinc-600 uppercase tracking-widest">Credenciales Alpha</p>
+                    <input type="email" placeholder="ID DE SOCIO FUNDADOR" class="auth-input text-[10px] font-black tracking-[0.4em] uppercase">
+                </div>
+                <div class="space-y-2">
+                    <p class="ml-4 text-[8px] font-black text-zinc-600 uppercase tracking-widest">Cifrado de Seguridad</p>
+                    <input type="password" placeholder="CÓDIGO ALPHA" class="auth-input text-lg tracking-[0.3em]">
+                </div>
+            </div>
+
+            <button onclick="SGRouter.navigate('dashboard', 'auth')" class="w-full py-6 bg-white text-black rounded-2xl font-black text-[10px] uppercase tracking-[0.5em] hover:bg-[#a855f7] hover:text-white transition-all shadow-2xl active:scale-95">
+                Sincronizar Nodo
+            </button>
+        </main>
+
+        <footer class="text-center space-y-4 reveal-node" style="animation-delay: 0.2s">
+            <p class="text-[9px] font-bold text-zinc-600 uppercase tracking-widest">
+                ¿Nuevo en la red? 
+                <button onclick="SGRouter.navigate('register', 'auth')" class="text-[#13ecd6] ml-2 font-black hover:underline">Solicitar Registro</button>
+            </p>
+        </footer>
+
+    </div>
+
+    <script src="engine/router.js"></script>
+</body>
+</html>

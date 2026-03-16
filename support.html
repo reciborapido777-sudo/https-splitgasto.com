@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="es" style="background-color:#000 !important;overflow-x:hidden">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<title>Soporte Alpha | SplitGasto 2026</title>
+<link rel="stylesheet" href="engine/global.css">
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700;800&family=Space+Grotesk:wght@500;700;900&display=swap');
+html,body{background:#000;color:#fff;font-family:'Plus Jakarta Sans',sans-serif;margin:0;padding:0;overflow-x:hidden;min-height:100vh;box-sizing:border-box}
+.glass-panel{background:rgba(255,255,255,0.02);backdrop-filter:blur(40px);-webkit-backdrop-filter:blur(40px);border:1px solid rgba(255,255,255,0.05);transition:all .5s;transform:translateZ(0)}
+.faq-item{border-bottom:1px solid rgba(255,255,255,0.05);cursor:pointer}
+.faq-item:last-child{border-bottom:none}
+.faq-answer{max-height:0;overflow:hidden;transition:max-height .4s cubic-bezier(.16,1,.3,1)}
+.faq-answer.open{max-height:200px}
+.faq-icon{transition:transform .3s}
+.faq-item.open .faq-icon{transform:rotate(45deg);color:#13ecd6}
+.channel-card{background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);border-radius:2rem;padding:1.5rem;cursor:pointer;transition:all .3s;display:flex;align-items:center;gap:1rem}
+.channel-card:hover{border-color:rgba(19,236,214,.3);background:rgba(19,236,214,.03);transform:translateY(-3px)}
+.search-field:focus-within{border-color:rgba(19,236,214,.4);box-shadow:0 0 20px rgba(19,236,214,.1)}
+.reveal-node{animation:revealUp .8s cubic-bezier(.16,1,.3,1) forwards;opacity:0}
+@keyframes revealUp{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}
+</style>
+</head>
+<body class="min-h-screen pb-40">
+<div class="max-w-2xl mx-auto px-4 sm:px-6 py-8 space-y-10">
+
+  <!-- Header -->
+  <header class="flex justify-between items-center py-4 sticky top-0 bg-black/80 backdrop-blur-xl z-50">
+    <div class="flex items-center gap-5">
+      <button onclick="SGRouter.back()" class="size-14 rounded-2xl glass-panel flex items-center justify-center hover:bg-white/5 active:scale-90 transition-all">
+        <span class="material-icons-round text-zinc-500">arrow_back</span>
+      </button>
+      <div>
+        <p class="text-[9px] font-black text-zinc-600 uppercase tracking-[0.4em]">Help Desk Alpha</p>
+        <h1 class="text-2xl font-black font-['Space_Grotesk'] uppercase italic tracking-tighter leading-none">Soporte</h1>
+      </div>
+    </div>
+    <div class="size-14 glass-panel rounded-2xl flex items-center justify-center text-[#13ecd6]">
+      <span class="material-icons-round">support_agent</span>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="glass-panel p-8 rounded-[3rem] text-center space-y-4 reveal-node relative overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-br from-[#13ecd6]/5 to-transparent pointer-events-none"></div>
+    <div class="relative z-10 space-y-3">
+      <span class="material-icons-round text-[#13ecd6] text-5xl">help_center</span>
+      <h2 class="text-xl font-black font-['Space_Grotesk'] uppercase italic">¿Cómo podemos ayudarte?</h2>
+      <p class="text-xs text-zinc-500">Centro de soporte disponible 24/7 para los Socios Fundadores.</p>
+    </div>
+  </section>
+
+  <!-- Buscador -->
+  <div class="glass-panel search-field px-5 py-4 rounded-2xl flex items-center gap-3 border-white/5 transition-all reveal-node" style="animation-delay:.05s">
+    <span class="material-icons-round text-zinc-500">search</span>
+    <input type="text" placeholder="Buscar en la base de conocimientos..." 
+      class="bg-transparent border-none outline-none text-xs font-bold w-full text-zinc-300 placeholder:text-zinc-700"
+      oninput="filterFAQ(this.value)">
+  </div>
+
+  <!-- Canales de contacto -->
+  <section class="space-y-4 reveal-node" style="animation-delay:.1s">
+    <p class="text-[9px] font-black text-zinc-600 uppercase tracking-[0.5em]">Contacto Directo</p>
+    <div class="grid sm:grid-cols-3 gap-3">
+      <div class="channel-card" onclick="SGRouter.showToast('Chat Alpha: Conectando con soporte...', 'success')">
+        <div class="size-10 bg-[#13ecd6]/10 rounded-xl flex items-center justify-center shrink-0">
+          <span class="material-icons-round text-[#13ecd6]">chat</span>
+        </div>
+        <div>
+          <p class="text-xs font-black uppercase">Chat Live</p>
+          <p class="text-[8px] text-zinc-600 uppercase tracking-widest">Respuesta inmediata</p>
+        </div>
+      </div>
+      <div class="channel-card" onclick="SGRouter.showToast('Email Alpha: soporte@splitgasto.com', 'info')">
+        <div class="size-10 bg-[#a855f7]/10 rounded-xl flex items-center justify-center shrink-0">
+          <span class="material-icons-round text-[#a855f7]">email</span>
+        </div>
+        <div>
+          <p class="text-xs font-black uppercase">Email Alpha</p>
+          <p class="text-[8px] text-zinc-600 uppercase tracking-widest">&lt;24h respuesta</p>
+        </div>
+      </div>
+      <div class="channel-card" onclick="SGRouter.showToast('Comunidad Fundadores próximamente', 'premium')">
+        <div class="size-10 bg-[#FF9D42]/10 rounded-xl flex items-center justify-center shrink-0">
+          <span class="material-icons-round text-[#FF9D42]">groups</span>
+        </div>
+        <div>
+          <p class="text-xs font-black uppercase">Comunidad</p>
+          <p class="text-[8px] text-zinc-600 uppercase tracking-widest">Socios Fundadores</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Categorías de ayuda -->
+  <section class="space-y-4 reveal-node" style="animation-delay:.15s">
+    <p class="text-[9px] font-black text-zinc-600 uppercase tracking-[0.5em]">Categorías</p>
+    <div class="grid grid-cols-2 gap-3">
+      <button onclick="filterFAQ('cuenta')" class="glass-panel p-5 rounded-2xl text-left space-y-2 hover:border-[#13ecd6]/20 transition-all group">
+        <span class="material-icons-round text-[#13ecd6] text-xl">manage_accounts</span>
+        <p class="text-xs font-black uppercase">Cuenta y Perfil</p>
+        <p class="text-[8px] text-zinc-600 uppercase tracking-widest">5 artículos</p>
+      </button>
+      <button onclick="filterFAQ('pago')" class="glass-panel p-5 rounded-2xl text-left space-y-2 hover:border-[#a855f7]/20 transition-all">
+        <span class="material-icons-round text-[#a855f7] text-xl">payment</span>
+        <p class="text-xs font-black uppercase">Pagos y Liquidaciones</p>
+        <p class="text-[8px] text-zinc-600 uppercase tracking-widest">8 artículos</p>
+      </button>
+      <button onclick="filterFAQ('grupo')" class="glass-panel p-5 rounded-2xl text-left space-y-2 hover:border-[#FF9D42]/20 transition-all">
+        <span class="material-icons-round text-[#FF9D42] text-xl">group_work</span>
+        <p class="text-xs font-black uppercase">Grupos y Socios</p>
+        <p class="text-[8px] text-zinc-600 uppercase tracking-widest">6 artículos</p>
+      </button>
+      <button onclick="filterFAQ('seguridad')" class="glass-panel p-5 rounded-2xl text-left space-y-2 hover:border-zinc-600/30 transition-all">
+        <span class="material-icons-round text-zinc-400 text-xl">security</span>
+        <p class="text-xs font-black uppercase">Seguridad</p>
+        <p class="text-[8px] text-zinc-600 uppercase tracking-widest">4 artículos</p>
+      </button>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="glass-panel p-7 rounded-[3rem] space-y-0 reveal-node" style="animation-delay:.2s">
+    <p class="text-[9px] font-black text-zinc-600 uppercase tracking-[0.5em] pb-5">Preguntas Frecuentes</p>
+    <div id="faqList">
+      <div class="faq-item py-4" onclick="toggleFAQ(this)" data-tags="cuenta contraseña acceso">
+        <div class="flex justify-between items-center">
+          <p class="text-xs font-black uppercase pr-6">¿Cómo recupero mi contraseña?</p>
+          <span class="material-icons-round faq-icon text-zinc-600 shrink-0">add</span>
+        </div>
+        <div class="faq-answer">
+          <p class="text-xs text-zinc-500 pt-3 leading-relaxed">Ve a la pantalla de login, pulsa "¿Olvidaste tu código Alpha?" e introduce tu correo. Recibirás un enlace seguro de recuperación en menos de 2 minutos.</p>
+        </div>
+      </div>
+      <div class="faq-item py-4" onclick="toggleFAQ(this)" data-tags="pago liquidacion transferencia">
+        <div class="flex justify-between items-center">
+          <p class="text-xs font-black uppercase pr-6">¿Cómo funciona la liquidación automática?</p>
+          <span class="material-icons-round faq-icon text-zinc-600 shrink-0">add</span>
+        </div>
+        <div class="faq-answer">
+          <p class="text-xs text-zinc-500 pt-3 leading-relaxed">La IA calcula la deuda mínima de cada socio para liquidar el grupo con el menor número de transferencias posible. Solo confirmas y el saldo se actualiza.</p>
+        </div>
+      </div>
+      <div class="faq-item py-4" onclick="toggleFAQ(this)" data-tags="grupo crear invitar socios">
+        <div class="flex justify-between items-center">
+          <p class="text-xs font-black uppercase pr-6">¿Puedo añadir socios a un grupo existente?</p>
+          <span class="material-icons-round faq-icon text-zinc-600 shrink-0">add</span>
+        </div>
+        <div class="faq-answer">
+          <p class="text-xs text-zinc-500 pt-3 leading-relaxed">Sí. Desde la pantalla del grupo, toca el icono de añadir socio. Puedes invitar por correo, enlace QR o código de referido de 6 dígitos.</p>
+        </div>
+      </div>
+      <div class="faq-item py-4" onclick="toggleFAQ(this)" data-tags="seguridad datos privacidad">
+        <div class="flex justify-between items-center">
+          <p class="text-xs font-black uppercase pr-6">¿Están seguros mis datos financieros?</p>
+          <span class="material-icons-round faq-icon text-zinc-600 shrink-0">add</span>
+        </div>
+        <div class="faq-answer">
+          <p class="text-xs text-zinc-500 pt-3 leading-relaxed">Sí. Cifrado AES-256 en reposo y TLS 1.3 en tránsito. Todos los tickets se almacenan con hash verificable. Cumplimiento total con GDPR europeo.</p>
+        </div>
+      </div>
+      <div class="faq-item py-4" onclick="toggleFAQ(this)" data-tags="pago moneda divisa internacional">
+        <div class="flex justify-between items-center">
+          <p class="text-xs font-black uppercase pr-6">¿Puedo usar otras monedas?</p>
+          <span class="material-icons-round faq-icon text-zinc-600 shrink-0">add</span>
+        </div>
+        <div class="faq-answer">
+          <p class="text-xs text-zinc-500 pt-3 leading-relaxed">Sí. El modo viaje convierte automáticamente usando el tipo de cambio en tiempo real. Soporta más de 170 divisas globales con actualización cada 15 minutos.</p>
+        </div>
+      </div>
+      <div class="faq-item py-4" onclick="toggleFAQ(this)" data-tags="cuenta premium elite membresia">
+        <div class="flex justify-between items-center">
+          <p class="text-xs font-black uppercase pr-6">¿Qué incluye la membresía Élite?</p>
+          <span class="material-icons-round faq-icon text-zinc-600 shrink-0">add</span>
+        </div>
+        <div class="faq-answer">
+          <p class="text-xs text-zinc-500 pt-3 leading-relaxed">Scanner OCR ilimitado, analytics avanzados con IA, bóveda con almacenamiento ilimitado, acceso al Lounge con juegos exclusivos, soporte VIP y estatus de Socio Fundador permanente.</p>
+        </div>
+      </div>
+    </div>
+    <div id="noResults" class="hidden text-center py-8 space-y-2">
+      <span class="material-icons-round text-zinc-700 text-4xl">search_off</span>
+      <p class="text-zinc-600 text-xs font-black uppercase tracking-widest">Sin resultados. Contacta con soporte.</p>
+    </div>
+  </section>
+
+  <!-- Estado del sistema -->
+  <section class="glass-panel p-6 rounded-[2.5rem] flex items-center justify-between reveal-node" style="animation-delay:.25s">
+    <div class="flex items-center gap-4">
+      <span class="size-3 bg-[#13ecd6] rounded-full shadow-[0_0_10px_#13ecd6] animate-pulse"></span>
+      <div>
+        <p class="text-xs font-black uppercase">Estado del Sistema</p>
+        <p class="text-[9px] text-zinc-600 uppercase tracking-widest">Todos los sistemas operativos</p>
+      </div>
+    </div>
+    <span class="px-3 py-1.5 bg-[#13ecd6]/10 text-[#13ecd6] text-[8px] font-black uppercase rounded-full border border-[#13ecd6]/20">Online</span>
+  </section>
+
+</div>
+
+<script src="engine/router.js"></script>
+<script>
+function toggleFAQ(item) {
+  const answer = item.querySelector('.faq-answer');
+  const isOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item').forEach(i => {
+    i.classList.remove('open');
+    i.querySelector('.faq-answer').classList.remove('open');
+  });
+  if (!isOpen) {
+    item.classList.add('open');
+    answer.classList.add('open');
+  }
+}
+
+function filterFAQ(query) {
+  const items = document.querySelectorAll('.faq-item');
+  let visible = 0;
+  items.forEach(item => {
+    const tags = item.dataset.tags || '';
+    const text = item.querySelector('p').textContent.toLowerCase();
+    const match = !query || tags.includes(query.toLowerCase()) || text.includes(query.toLowerCase());
+    item.style.display = match ? '' : 'none';
+    if (match) visible++;
+  });
+  document.getElementById('noResults').classList.toggle('hidden', visible > 0);
+}
+</script>
+</body>
+</html>
