@@ -1,0 +1,16 @@
+# SplitGasto 2026 - Cloudflare Pages Redirects
+# Ensure all routes return the correct HTML
+
+/app           /dashboard.html   302
+/login         /auth-login.html  302
+/register      /auth-register.html 302
+/games         /games.html       302
+/profile       /profile.html     302
+/groups        /groups.html      302
+/activity      /activity.html    302
+/analytics     /analytics.html   302
+/settings      /settings.html    302
+/rankings      /rankings.html    302
+
+# Fallback
+/*             /index.html       200
