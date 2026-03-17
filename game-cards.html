@@ -118,7 +118,12 @@
   .confetti-piece { position:fixed; border-radius:2px; animation:confetti-fall linear forwards; z-index:100; pointer-events:none; }
   @keyframes confetti-fall { from{transform:translateY(-20px) rotate(0deg);opacity:1} to{transform:translateY(110vh) rotate(720deg);opacity:0} }
 </style>
-<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#13ecd6">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="SplitGasto">
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
 </head>
 <body class="text-white pb-32">
 
@@ -464,5 +469,15 @@ renderPlayers();
 renderScoreboard();
 updateStats();
 </script>
+
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(r => console.log('[SW] Registered:', r.scope))
+                    .catch(e => console.warn('[SW] Registration failed:', e));
+            });
+        }
+    </script>
 </body>
 </html>

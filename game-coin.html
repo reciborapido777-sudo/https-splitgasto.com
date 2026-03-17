@@ -134,7 +134,12 @@
   .heads-glow { box-shadow:0 0 80px rgba(19,236,214,0.2); }
   .tails-glow { box-shadow:0 0 80px rgba(212,175,55,0.2); }
 </style>
-<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#13ecd6">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="SplitGasto">
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
 </head>
 <body class="text-white pb-32">
 
@@ -431,5 +436,15 @@ function launchConfetti(color) {
 document.getElementById('player1-name').textContent = players[0].name;
 document.getElementById('player2-name').textContent = players[1].name;
 </script>
+
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(r => console.log('[SW] Registered:', r.scope))
+                    .catch(e => console.warn('[SW] Registration failed:', e));
+            });
+        }
+    </script>
 </body>
 </html>

@@ -54,7 +54,12 @@
             font-family: 'Space Grotesk', sans-serif;
         }
     </style>
-<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#13ecd6">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="SplitGasto">
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
 </head>
 <body class="min-h-screen pb-32">
 
@@ -172,5 +177,15 @@
         </div>
     </nav>
     <script src="engine/router.js"></script>
+
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(r => console.log('[SW] Registered:', r.scope))
+                    .catch(e => console.warn('[SW] Registration failed:', e));
+            });
+        }
+    </script>
 </body>
 </html>

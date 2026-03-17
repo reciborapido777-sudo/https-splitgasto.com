@@ -65,7 +65,12 @@
             box-shadow: 0 0 40px rgba(19, 236, 214, 0.4);
         }
     </style>
-<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#13ecd6">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="SplitGasto">
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
 </head>
 <body class="flex flex-col items-center justify-center p-6 text-center space-y-12">
 
@@ -118,5 +123,42 @@
     </footer>
 
     <script src="engine/router.js"></script>
+
+    <!-- Bottom Navigation Bar -->
+    <nav class="fixed bottom-0 left-0 right-0 z-50" style="background:rgba(0,0,0,0.95);backdrop-filter:blur(20px);border-top:1px solid rgba(255,255,255,0.06)">
+        <div class="max-w-7xl mx-auto px-4 flex justify-around items-center py-3 pb-6">
+            <button onclick="SGRouter.navigate('dashboard')" class="flex flex-col items-center gap-1 opacity-60 hover:opacity-100 transition-opacity">
+                <span class="material-icons-round text-xl">grid_view</span>
+                <span style="font-size:8px;font-weight:900;text-transform:uppercase;letter-spacing:0.15em">Mando</span>
+            </button>
+            <button onclick="SGRouter.navigate('groups')" class="flex flex-col items-center gap-1 opacity-60 hover:opacity-100 transition-opacity">
+                <span class="material-icons-round text-xl">groups_3</span>
+                <span style="font-size:8px;font-weight:900;text-transform:uppercase;letter-spacing:0.15em">Grupos</span>
+            </button>
+            <button onclick="SGRouter.navigate('games')" class="flex flex-col items-center gap-1 opacity-60 hover:opacity-100 transition-opacity">
+                <span class="material-icons-round text-xl">casino</span>
+                <span style="font-size:8px;font-weight:900;text-transform:uppercase;letter-spacing:0.15em">Juegos</span>
+            </button>
+            <button onclick="SGRouter.navigate('analytics')" class="flex flex-col items-center gap-1 opacity-60 hover:opacity-100 transition-opacity">
+                <span class="material-icons-round text-xl">query_stats</span>
+                <span style="font-size:8px;font-weight:900;text-transform:uppercase;letter-spacing:0.15em">Métricas</span>
+            </button>
+            <button onclick="SGRouter.navigate('profile')" class="flex flex-col items-center gap-1 opacity-60 hover:opacity-100 transition-opacity">
+                <span class="material-icons-round text-xl">person</span>
+                <span style="font-size:8px;font-weight:900;text-transform:uppercase;letter-spacing:0.15em">Perfil</span>
+            </button>
+        </div>
+    </nav>
+
+
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js')
+                    .then(r => console.log('[SW] Registered:', r.scope))
+                    .catch(e => console.warn('[SW] Registration failed:', e));
+            });
+        }
+    </script>
 </body>
 </html>

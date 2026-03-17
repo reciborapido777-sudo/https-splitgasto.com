@@ -35,7 +35,7 @@ const SGRouter = {
         'game-roulette': 'game-roulette.html',
         'game-cards': 'game-cards.html',
         'game-coin': 'game-coin.html',
-        // Expense & Group Management
+        'game-darts': 'game-darts.html',
         'add-expense': 'add-expense.html',
         'create-group': 'create-group.html',
         // Rankings & Settings
