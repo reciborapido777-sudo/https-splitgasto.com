@@ -60,7 +60,13 @@
 
         .reveal-node { animation: revealUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; opacity: 0; }
         @keyframes revealUp { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
-    </style>
+    
+        .nav-item{display:flex;flex-direction:column;align-items:center;gap:4px;padding:8px 12px;cursor:pointer;transition:all .2s}
+        .nav-item span.material-icons-round,.nav-item .mat-icon{font-size:20px;color:#4a4a4a;transition:color .2s}
+        .nav-item p{font-size:8px;font-weight:900;text-transform:uppercase;letter-spacing:.15em;color:#4a4a4a;transition:color .2s}
+        .nav-item.active span.material-icons-round,.nav-item.active p{color:#13ecd6}
+        .nav-item:hover span.material-icons-round,.nav-item:hover p{color:#fff}
+</style>
 <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#13ecd6">
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -149,6 +155,18 @@
                         <span class="text-[11px] font-black uppercase text-zinc-500 tracking-widest group-hover:text-white transition-colors">Configuración</span>
                         <span class="material-icons-round text-zinc-600 group-hover:text-[#a855f7] transition-colors text-sm">settings</span>
                     </div>
+                    <div onclick="SGRouter.navigate('friends', 'profile')" class="flex justify-between items-center p-6 rounded-[2.2rem] bg-white/[0.03] border border-white/5 hover:border-[#13ecd6]/20 transition-all cursor-pointer group">
+                        <span class="text-[11px] font-black uppercase text-zinc-500 tracking-widest group-hover:text-white transition-colors">Mis Amigos</span>
+                        <span class="material-icons-round text-zinc-600 group-hover:text-[#13ecd6] transition-colors text-sm">group</span>
+                    </div>
+                    <div onclick="SGRouter.navigate('invite', 'profile')" class="flex justify-between items-center p-6 rounded-[2.2rem] bg-white/[0.03] border border-white/5 hover:border-[#D4AF37]/20 transition-all cursor-pointer group">
+                        <span class="text-[11px] font-black uppercase text-zinc-500 tracking-widest group-hover:text-white transition-colors">Invitar Amigos</span>
+                        <span class="material-icons-round text-zinc-600 group-hover:text-[#D4AF37] transition-colors text-sm">person_add</span>
+                    </div>
+                    <div onclick="SGRouter.navigate('support', 'profile')" class="flex justify-between items-center p-6 rounded-[2.2rem] bg-white/[0.03] border border-white/5 hover:border-[#13ecd6]/20 transition-all cursor-pointer group">
+                        <span class="text-[11px] font-black uppercase text-zinc-500 tracking-widest group-hover:text-white transition-colors">Soporte</span>
+                        <span class="material-icons-round text-zinc-600 group-hover:text-[#13ecd6] transition-colors text-sm">support_agent</span>
+                    </div>
                 </div>
             </div>
 
@@ -185,27 +203,28 @@
     </div>
 
 
-    <nav class="fixed bottom-0 left-0 right-0 z-50 bg-black/90 backdrop-blur-xl border-t border-white/5">
-        <div class="max-w-7xl mx-auto px-6 flex justify-around items-center py-4 pb-6">
-            <button onclick="SGRouter.navigate('dashboard')" class="flex flex-col items-center gap-1.5 group">
-                <span class="material-icons-round text-xl group-hover:text-white transition-colors" style="">grid_view</span>
-                <span class="text-[8px] font-black uppercase tracking-widest group-hover:text-white transition-colors" style="">Mando</span>
+        <!-- Bottom Nav -->
+    <nav class="fixed bottom-0 left-0 right-0 z-50 bg-black/95 backdrop-blur-xl border-t border-white/5">
+        <div class="max-w-lg mx-auto flex justify-around items-center py-3 pb-5">
+            <button class="nav-item " onclick="SGRouter.navigate('dashboard')">
+                <span class="material-icons-round">grid_view</span>
+                <p>Mando</p>
             </button>
-            <button onclick="SGRouter.navigate('groups')" class="flex flex-col items-center gap-1.5 group">
-                <span class="material-icons-round text-xl group-hover:text-white transition-colors" style="">groups_3</span>
-                <span class="text-[8px] font-black uppercase tracking-widest group-hover:text-white transition-colors" style="">Grupos</span>
+            <button class="nav-item " onclick="SGRouter.navigate('groups')">
+                <span class="material-icons-round">groups_3</span>
+                <p>Grupos</p>
             </button>
-            <button onclick="SGRouter.navigate('activity')" class="flex flex-col items-center gap-1.5 group">
-                <span class="material-icons-round text-xl group-hover:text-white transition-colors" style="">receipt_long</span>
-                <span class="text-[8px] font-black uppercase tracking-widest group-hover:text-white transition-colors" style="">Gastos</span>
+            <button class="nav-item " onclick="SGRouter.navigate('activity')">
+                <span class="material-icons-round">receipt_long</span>
+                <p>Gastos</p>
             </button>
-            <button onclick="SGRouter.navigate('analytics')" class="flex flex-col items-center gap-1.5 group">
-                <span class="material-icons-round text-xl group-hover:text-white transition-colors" style="">query_stats</span>
-                <span class="text-[8px] font-black uppercase tracking-widest group-hover:text-white transition-colors" style="">Métricas</span>
+            <button class="nav-item " onclick="SGRouter.navigate('analytics')">
+                <span class="material-icons-round">query_stats</span>
+                <p>Métricas</p>
             </button>
-            <button onclick="SGRouter.navigate('profile')" class="flex flex-col items-center gap-1.5 group">
-                <span class="material-icons-round text-xl" style="color:#13ecd6">person</span>
-                <span class="text-[8px] font-black uppercase tracking-widest" style="color:#13ecd6">Perfil</span>
+            <button class="nav-item active" onclick="SGRouter.navigate('profile')">
+                <span class="material-icons-round">person</span>
+                <p>Perfil</p>
             </button>
         </div>
     </nav>
@@ -214,7 +233,7 @@
     <script>
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
-                navigator.serviceWorker.register('/sw.js', { updateViaCache: 'none' })
+                navigator.serviceWorker.register('sw.js', { updateViaCache: 'none' })
                     .then(r => {
                         r.update(); // Force SW update check
                         console.log('[SW] Registered:', r.scope);

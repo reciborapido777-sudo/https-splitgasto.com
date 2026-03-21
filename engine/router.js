@@ -1,66 +1,69 @@
 /**
  * SplitGasto 2026 - Master Navigation Router
- * Versión: 3.0 PLATINUM - Rutas Absolutas + Anti-Loop + Resiliencia Total
- * Fix: Absolute paths, correct loop detection, SW cache bypass on navigate
+ * Versión: 4.0 PLATINUM - Rutas Relativas + Anti-Loop + Resiliencia Total
+ * Fix: Relative paths, correct auth/register/membership routes
  */
 const SGRouter = {
-    // ─── Mapa de Nodos con rutas ABSOLUTAS ──────────────────────────────
+    // ─── Mapa de Nodos con rutas RELATIVAS ──────────────────────────────
     routes: {
         // Core Auth
-        'landing':       '/index.html',
-        'auth':          '/auth-login.html',
-        'auth-login':    '/auth-login.html',
-        'register':      '/auth-register.html',
-        'auth-register': '/auth-register.html',
+        'landing':       'index.html',
+        'auth':          'auth.html',
+        'auth-login':    'auth.html',
+        'register':      'register.html',
+        'auth-register': 'register.html',
         // Main App
-        'dashboard':     '/dashboard.html',
-        'groups':        '/groups.html',
-        'activity':      '/activity.html',
-        'split':         '/split.html',
-        'success':       '/success.html',
-        'profile':       '/profile.html',
-        'membership':    '/membership.html',
-        'security':      '/security.html',
-        'notifications': '/notifications.html',
-        'receipt':       '/receipt-view.html',
-        'analytics':     '/analytics.html',
-        'manual':        '/manual.html',
-        'scanner':       '/scanner.html',
-        'vault':         '/vault.html',
+        'dashboard':     'dashboard.html',
+        'groups':        'groups.html',
+        'activity':      'activity.html',
+        'split':         'split.html',
+        'success':       'success.html',
+        'profile':       'profile.html',
+        'membership':    'membership.html',
+        'security':      'security.html',
+        'notifications': 'notifications.html',
+        'receipt':       'receipt-view.html',
+        'analytics':     'analytics.html',
+        'manual':        'manual.html',
+        'scanner':       'scanner.html',
+        'vault':         'vault.html',
+        'settings':      'settings.html',
         // Legal & Investors
-        'legal':         '/legal.html',
-        'investors':     '/investors.html',
+        'legal':         'legal.html',
+        'investors':     'investors.html',
         // Games 3D
-        'games':         '/games.html',
-        'game-roulette': '/game-roulette.html',
-        'game-cards':    '/game-cards.html',
-        'game-coin':     '/game-coin.html',
-        'game-darts':    '/game-darts.html',
+        'games':         'games.html',
+        'game-roulette': 'game-roulette.html',
+        'game-cards':    'game-cards.html',
+        'game-coin':     'game-coin.html',
+        'game-darts':    'game-darts.html',
         // Expense & Group Management
-        'add-expense':   '/add-expense.html',
-        'create-group':  '/create-group.html',
+        'add-expense':   'add-expense.html',
+        'create-group':  'create-group.html',
+        'liquidation':   'liquidation.html',
         // Rankings & Settings
-        'rankings':      '/rankings.html',
-        'settings':      '/settings.html',
+        'rankings':      'rankings.html',
         // Onboarding & Support
-        'onboarding':    '/onboarding.html',
-        'support':       '/support.html',
-        'liquidation':   '/liquidation.html',
+        'onboarding':    'onboarding.html',
+        'support':       'support.html',
+        // Social
+        'friends':       'friends.html',
+        'invite':        'invite.html',
         // Error / Resilience
-        'error':         '/engine/resilience.html'
+        'error':         'engine/resilience.html'
     },
 
     /**
      * Navega a una página por su ID de ruta
-     * Usa rutas absolutas para evitar problemas con subdirectorios o ?from= params
+     * Usa rutas relativas compatibles con cualquier despliegue
      */
     navigate(routeId, origin = null) {
         const target = this.routes[routeId] || this.routes['error'];
 
-        // Anti-loop: compara la ruta absoluta del target con la actual
-        const currentAbsPath = window.location.pathname;
-        if (target === currentAbsPath) {
-            // Si es la misma página, simplemente recargamos limpio (sin ?from)
+        // Anti-loop: compara el nombre del archivo actual con el target
+        const currentFile = window.location.pathname.split('/').pop() || 'index.html';
+        if (target === currentFile || target === currentFile.split('?')[0]) {
+            // Misma página
             if (window.location.search) {
                 window.location.href = target;
             } else {
@@ -83,7 +86,7 @@ const SGRouter = {
     },
 
     /**
-     * Retorno Táctico v3.0
+     * Retorno Táctico v4.0
      * Prioridad: ?from= param → historial del navegador → dashboard
      */
     back() {
@@ -106,7 +109,17 @@ const SGRouter = {
     },
 
     /**
-     * Toast de Notificación (v3.0 Gold)
+     * Navega a premium si la funcionalidad está bloqueada
+     */
+    requirePremium(feature = '') {
+        this.showToast(feature ? `${feature} es Premium 👑` : '¡Función Premium! Desbloquea todo por 2,99€/mes', 'premium');
+        setTimeout(() => {
+            this.navigate('membership', 'dashboard');
+        }, 1200);
+    },
+
+    /**
+     * Toast de Notificación (v4.0 Gold)
      */
     showToast(message, type = 'success') {
         const colors = {
@@ -129,7 +142,7 @@ const SGRouter = {
             background:rgba(10,10,10,0.97); border:1px solid rgba(255,255,255,0.1);
             box-shadow:0 20px 50px rgba(0,0,0,0.6); backdrop-filter:blur(24px);
             transition:opacity 0.35s ease, transform 0.35s cubic-bezier(0.16,1,0.3,1);
-            opacity:0; white-space:nowrap; pointer-events:none;
+            opacity:0; white-space:nowrap; pointer-events:none; max-width:90vw;
         `;
         toast.innerHTML = `
             <div style="display:flex;align-items:center;gap:10px">
